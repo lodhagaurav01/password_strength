@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength</title>
+
+    <style>
+        .container {
+            width: 100%;
+            padding: 10px;
+
+        }
+
+        input {
+            color: brown;
+            margin-left: 1cm;
+        }
+
+        span {
+            margin-left: 15cm;
+        }
+
+        .container p {
+            margin-top: 2cm;
+            font-size: 1cm;
+            text-align: center;
+        }
+
+        input[type=text]:hover {
+            box-shadow: 10px 10px 10px #e60c0c;
+        }
+
+        #message {
+            display: none;
+            background: #f1f1f1;
+            color: #000;
+            position: relative;
+            padding: 20px;
+            margin-top: 10px;
+        }
+
+        #message p {
+            padding: 10px 35px;
+            font-size: 18px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h4>To show password strength for a
+        password entered in a HTML password field.</h4>
+
+    <div class="container">
+        <form action="#">
+
+
+            <h1 style="color: chocolate;text-align: center;">Password Strength</h1>
+            <span> Password :<input type="text" id="password" name="password" maxlength="12" minlength="8"
+                    autocomplete="off"></span>
+            <b>
+                <p id="msg"></p>
+            </b>
+        </form>
+    </div>
+
+    <div class="msg1" id="message">
+        <h3>Password must contain the following:</h3>
+        <p>A <b>lowercase</b> letter</p>
+        <p>A <b>capital (uppercase)</b> letter</p>
+        <p>A <b>number</b></p>
+        <p>Minimum <b>8 characters</b></p>
+    </div>
+
+    <script>
+        let inputPwd = document.getElementById("password");
+        inputPwd.onfocus = function () {
+
+            document.getElementById("msg").innerHTML = "Please Enter Password to check!";
+            document.getElementById("message").style.display = "block";
+        }
+
+        inputPwd.onblur = function () {
+            document.getElementById("msg").style.display = "none";
+            document.location.reload();
+        }
+
+        let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+        let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
+
+        inputPwd.onkeyup = function () {
+
+
+            if (inputPwd.value.match(strongPassword)) {
+                document.getElementById("msg").innerHTML = "Strong";
+                document.getElementById("msg").style.color = "green";
+            }
+            else if (inputPwd.value.match(mediumPassword)) {
+
+                document.getElementById("msg").innerHTML = "Medium";
+                document.getElementById("msg").style.color = "Orange";
+            }
+            else {
+                document.getElementById("msg").innerHTML = "Weak";
+                document.getElementById("msg").style.color = "blue";
+            }
+
+            if (inputPwd.value.length == 0) {
+                document.location.reload();
+            }
+
+        }
+    </script>
+</body>
+
+</html>
